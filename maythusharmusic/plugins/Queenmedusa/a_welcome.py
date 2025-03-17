@@ -97,7 +97,7 @@ async def auto_state(_, message):
 
 # Auto-welcome message for new members
 @app.on_chat_member_updated(filters.group, group=5)
-async def greet_new_members(_, member: ChatMemberUpdated):
+async def greet_new_members(_, member: ChatMemberUpdated: message):
     userbot = await get_assistant(member.chat.id)
     try:
         chat_id = member.chat.id
@@ -108,7 +108,7 @@ async def greet_new_members(_, member: ChatMemberUpdated):
         user = member.new_chat_member.user
 
         if member.new_chat_member and not member.old_chat_member:
-            welcome_text = f"{from_user.mention}, ωᴇℓᴄᴏᴍᴇ ʙᴀʙʏ🦋"
+            welcome_text = f"{message.from_user.mention}, ωᴇℓᴄᴏᴍᴇ ʙᴀʙʏ🦋"
             await userbot.send_message(chat_id, text=welcome_text)
 
     except Exception as e:
