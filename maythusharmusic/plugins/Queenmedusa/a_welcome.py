@@ -105,10 +105,10 @@ async def greet_new_members(_, member: ChatMemberUpdated):
         if welcome_status == "off":
             return
 
-        user = member.new_chat_member.user
+        user = member.new_chat_member.user if member.new_chat_member else member.from_user
 
         if member.new_chat_member and not member.old_chat_member:
-            welcome_text = f"{message.from_user.mention}, ωᴇℓᴄᴏᴍᴇ ʙᴀʙʏ🦋"
+            welcome_text = f"{user.mention}, ωᴇℓᴄᴏᴍᴇ ʙᴀʙʏ🦋"
             await userbot.send_message(chat_id, text=welcome_text)
 
     except Exception as e:
