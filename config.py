@@ -45,6 +45,11 @@ GIT_TOKEN = getenv(
 SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/sasukevipmusicbotsupport")
 SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/sasukemusicbotsupportchat")
 
+# Time after which you're assistant account will leave chats automatically.
+AUTO_LEAVE_ASSISTANT_TIME = int(
+    getenv("ASSISTANT_LEAVE_TIME", 25200)
+)  # Remember to give value in Seconds
+
 # Set this to True if you want the assistant to automatically leave chats after an interval
 AUTO_LEAVING_ASSISTANT = bool(getenv("AUTO_LEAVING_ASSISTANT", True))
 
