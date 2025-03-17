@@ -89,7 +89,6 @@ async def _clear_(chat_id):
         )
     except Exception as e:
         print(f"Error sending message: {e}")
-            
 
 
 class Call(PyTgCalls):
@@ -205,6 +204,7 @@ class Call(PyTgCalls):
         except:
             pass
 
+
     async def seek_stream(self, chat_id, file_path, to_seek, duration, mode):
         assistant = await group_assistant(self, chat_id)
         audio_stream_quality = await get_audio_bitrate(chat_id)
@@ -225,7 +225,7 @@ class Call(PyTgCalls):
             )
         )
         await assistant.change_stream(chat_id, stream)
-
+    
     async def speedup_stream(self, chat_id: int, file_path, speed, playing):
         assistant = await group_assistant(self, chat_id)
         if str(speed) != "1.0":
@@ -332,6 +332,25 @@ class Call(PyTgCalls):
             chat_id,
             stream,
         )
+
+    async def seek_stream(self, chat_id, file_path, to_seek, duration, mode):
+        assistant = await group_assistant(self, chat_id)
+        stream = (
+            MediaStream(
+                file_path,
+                audio_parameters=AudioQuality.STUDIO,
+                video_parameters=VideoQuality.SD_480p,
+                ffmpeg_parameters=f"-ss {to_seek} -to {duration}",
+            )
+            if mode == "video"
+            else MediaStream(
+                file_path,
+                audio_parameters=AudioQuality.STUDIO,
+                ffmpeg_parameters=f"-ss {to_seek} -to {duration}",
+                video_flags=MediaStream.IGNORE,
+            )
+        )
+        await assistant.change_stream(chat_id, stream)
 
     async def stream_call(self, link):
         assistant = await group_assistant(self, config.LOGGER_ID)
