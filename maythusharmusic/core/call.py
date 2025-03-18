@@ -48,47 +48,10 @@ counter = {}
 loop = asyncio.get_event_loop_policy().get_event_loop()
 
 
-async def _st_(chat_id):
+async def _clear_(chat_id):
     db[chat_id] = []
     await remove_active_video_chat(chat_id)
     await remove_active_chat(chat_id)
-
-
-async def _clear_(chat_id):
-    # Clearing the chat ID data in the database
-    db[chat_id] = []
-
-    # Removing active video chat and chat records
-    try:
-        await remove_active_video_chat(chat_id)
-        await remove_active_chat(chat_id)
-    except Exception as e:
-        print(f"Error removing active chats: {e}")
-
-    # Preparing the text for admin mentions
-    text = ""
-
-    try:
-        # Fetching admins from the chat
-        admins = [
-            admin.user.id
-            async for admin in app.get_chat_members(
-                chat_id, filter=ChatMembersFilter.ADMINISTRATORS
-            )
-        ]
-
-        # Looping through each admin to check if they are not a bot or deleted
-        for admin in admins:
-            admin_member = await app.get_chat_member(chat_id, admin)
-            if not admin_member.user.is_bot and not admin_member.user.is_deleted:
-                text += f"[\u2063](tg://user?id={admin})"
-    except Exception as e:
-        await app.send_message(
-            chat_id,
-            f"**ѕσɴg нαѕ ᴇɴᴅ ιη νᴄ🥹⁣**{text}",
-        )
-    except Exception as e:
-        print(f"Error sending message: {e}")
 
 
 class Call(PyTgCalls):
