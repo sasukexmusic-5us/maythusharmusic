@@ -1,11 +1,3 @@
-  # Let's create our background worker
-  - type: worker
-    name: MUSIC
-    env: ruby
-    region: ohio
-    buildCommand: bundle install
-    startCommand: bundle exec sidekiq -r ./main.rb
-    autoDeploy: false
-    envVars:
-      - key: API_ID
-        value: "123456789"
+build:
+  docker:
+    worker: Dockerfile
