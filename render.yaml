@@ -1,4 +1,12 @@
-build:
-  docker:
-    worker: Dockerfile
-        buildCommand: pip install -r requirements.txt
+services:
+  - name: background-worker
+    type: worker
+    runtime: python-3.11.4
+    plan: starter  # Free မဟုတ်တဲ့ plan
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python3 -m maythusharmusic"
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DEBUG
+        value: "False"
