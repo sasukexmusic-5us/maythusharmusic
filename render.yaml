@@ -1,5 +1,0 @@
-build:
-  docker:
-    worker: Dockerfile
-run: python-4.7.0
-  worker: python3 -m maythusharmusic
